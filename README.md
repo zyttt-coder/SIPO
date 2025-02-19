@@ -11,6 +11,7 @@ We provide instructions for running SIPO with MOD sampling on the **HelpSteer** 
 ## Environment Set Up
 ```
 conda create -n SIPO python=3.10.15
+conda activate SIPO
 pip install -r requirements.txt
 ```
 ## Dataset Preprocess
