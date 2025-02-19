@@ -33,7 +33,6 @@ class ScriptArguments:
     input_mod_dir: Optional[str] = field(default=None, metadata={"help": "input path for mod generations"})
     input_dir: Optional[str] = field(default=None, metadata={"help": "input path for generations"})
     output_dir: Optional[str] = field(default=None, metadata={"help": "output path for generations"})
-    eval_size: Optional[int] = field(default=1000, metadata={"help": "number of prompts for generations"})
     rank: Optional[int] = field(default=0)
     world_size: Optional[int] = field(default=1)
     seed: Optional[int] = field(default=0)

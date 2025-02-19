@@ -116,7 +116,10 @@ if __name__ == "__main__":
         from datasets import disable_caching
         disable_caching()
     rdp = DATASET_CONFIGS[script_args.dataset_name](prompt_template=script_args.prompt_template)
-    eval_dataset  = rdp.get_preference_dataset(split="train_conflict").select(range(script_args.eval_size))
+    if script_args.eval_size > 0:
+        eval_dataset  = rdp.get_preference_dataset(split="train_conflict").select(range(script_args.eval_size))
+    else:
+        eval_dataset  = rdp.get_preference_dataset(split="train_conflict")
 
     split_size = math.ceil(len(eval_dataset) /script_args.world_size)
     eval_dataset = eval_dataset.select(range(
