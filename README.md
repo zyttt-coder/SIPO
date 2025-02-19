@@ -30,7 +30,7 @@ CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python scripts/baselines/dpo.py     --sft_mo
 ## MOD Sampling
 2. Use MOD sampling to sample responses.
 ```
-accelerate launch scripts/baselines/mod.py     --soup_weights 0.2 0.4 0.6 0.8   --sft_model_name {path_to_the_sft_model}    --dpo_model_1_name "./output/nvidia/HelpSteer/SIPO/0.0correctness/best_checkpoint"    --dpo_model_2_name "./output/nvidia/HelpSteer/SIPO/1.0correctness/best_checkpoint"     --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:"     --dataset_name "nvidia/HelpSteer-pairwise-correctness-0.6"     --output_dir "./output/nvidia/HelpSteer/SIPO/gen_sample"     --max_length 512  --eval_size -1  --split "train_conflict"
+PYTHONPATH=. accelerate launch scripts/baselines/mod.py     --soup_weights 0.2 0.4 0.6 0.8   --sft_model_name {path_to_the_sft_model}    --dpo_model_1_name "./output/nvidia/HelpSteer/SIPO/0.0correctness/best_checkpoint"    --dpo_model_2_name "./output/nvidia/HelpSteer/SIPO/1.0correctness/best_checkpoint"     --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:"     --dataset_name "nvidia/HelpSteer-pairwise-correctness-0.6"     --output_dir "./output/nvidia/HelpSteer/SIPO/gen_sample"     --max_length 512  --eval_size -1  --split "train_conflict"
 ```
 
 ## Review Generation
