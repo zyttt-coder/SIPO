@@ -20,13 +20,13 @@ python ./src/data/preprocess/HS_preprocess.py --tokenizer_path PKU-Alignment/alp
 ## SFT
 We follow the code of [modpo](https://github.com/ZHZisZZ/modpo) to perform SFT on llama-2-7b. See the repository and [scripts/sft](scripts/sft) for more details.
 
-## First Time alignment
+## First Time Alignment
 1. Perform first time alignment on the sft-model using DPO on two conflicted objectives (*correctness* and *verbosity* for **HelpSteer**). 
 ```
 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python scripts/baselines/dpo.py     --sft_model_name {path_to_the_sft_model}     --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:"     --dataset_name "nvidia/HelpSteer-pairwise-{correctness|verbosity}-0.6"     --max_length 512     --training_args.output_dir "./output/nvidia/HelpSteer/SIPO/{1.0|0.0}correctness"     --training_args.run_name "nvidia/HelpSteer/SIPO/{1.0|0.0}correctness"     --training_args.per_device_train_batch_size 1     --training_args.per_device_eval_batch_size 6     --training_args.gradient_accumulation_steps 2     --training_args.learning_rate 5e-4     --peft_config.r 64     --peft_config.target_modules q_proj k_proj v_proj o_proj     --peft_config.lora_alpha 1     --peft_config.lora_dropout 0
 ```
 
-## MOD sampling
+## MOD Sampling
 2. Use MOD sampling to sample responses.
 ```
 accelerate launch scripts/baselines/mod.py     --soup_weights 0.2 0.4 0.6 0.8   --sft_model_name {path_to_the_sft_model}    --dpo_model_1_name "./output/nvidia/HelpSteer/SIPO/0.0correctness/best_checkpoint"    --dpo_model_2_name "./output/nvidia/HelpSteer/SIPO/1.0correctness/best_checkpoint"     --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:"     --dataset_name "nvidia/HelpSteer-pairwise-correctness-0.6"     --output_dir "./output/nvidia/HelpSteer/SIPO/gen_sample"     --max_length 512  --eval_size -1  --split "train_conflict"
