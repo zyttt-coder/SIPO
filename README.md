@@ -74,8 +74,7 @@ CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python scripts/SIPO/Iterative_DPO.py --sft_m
 7. Use the models after re-alignment and MOD sampling to sample responses on test questions. Evaluate the responses using official released reward models.
 ### MOD sampling on models after re-alignment
 ```
-CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python3 scripts/utils/mod_general.py     --soup_weights {0.2|0.4|0.6|0.8}   --sft_model_1_name "/model/HelpSteer_correct_DPO_model"    --sft_model_2_name "/model/HelpSteer_verbose_DPO_model"     --dpo_model_1_name "./output/nvidia/HelpSteer/SIPO/re-alignment/1.0correctness/best_checkpoint"    --dpo_model_2_name "./output/nvidia/HelpSteer/SIPO/re-alignment/0.0correctness/best_checkpoint"     --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:"     --dataset_name "nvidia/HelpSteer-pairwise-correctness"     --output_dir "./output/nvidia/HelpSteer/SIPO/re-alignment/{0.2|0.4|0.6|0.8}correctness
-/gen_test"     --max_length 512  --eval_size -1  --split "test"
+CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python3 scripts/utils/mod_general.py     --soup_weights {0.2|0.4|0.6|0.8}   --sft_model_1_name "/model/HelpSteer_correct_DPO_model"    --sft_model_2_name "/model/HelpSteer_verbose_DPO_model"     --dpo_model_1_name "./output/nvidia/HelpSteer/SIPO/re-alignment/1.0correctness/best_checkpoint"    --dpo_model_2_name "./output/nvidia/HelpSteer/SIPO/re-alignment/0.0correctness/best_checkpoint"     --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:"     --dataset_name "nvidia/HelpSteer-pairwise-correctness"     --output_dir "./output/nvidia/HelpSteer/SIPO/re-alignment/{0.2|0.4|0.6|0.8}correctness/gen_test"     --max_length 512  --eval_size -1  --split "test"
 ```
 ### evaluation using official released RMs
 ```
