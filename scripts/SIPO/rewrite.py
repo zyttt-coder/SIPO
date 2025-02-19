@@ -40,7 +40,6 @@ if __name__ == "__main__":
     script_args = tyro.cli(ScriptArguments)
     set_seeds(script_args.seed)
     soup_weights = [0.2,0.4,0.6,0.8]
-    assert "1.0correctness" in script_args.dpo_model_1_name and "0.0correctness" in script_args.dpo_model_2_name
 
     # base model
     print_local_main("loading model...")
