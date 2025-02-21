@@ -1,6 +1,6 @@
 # SIPO: Self-Improvement Towards Pareto Optimality
 
-Official code for paper "Self-Improvement Towards Pareto Optimality: Mitigating Preference Conflicts in Multi-Objective Alignment"
+Official code for paper **Self-Improvement Towards Pareto Optimality: Mitigating Preference Conflicts in Multi-Objective Alignment**. [Arxiv](https://arxiv.org/abs/2502.14354)
 
 <p align="center">
   <img src="assets/framework.jpg" width="100%">
