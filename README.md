@@ -57,7 +57,7 @@ CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python3 scripts/SIPO/select_sample.py    --s
 ```
 
 ## Fine-tuning
-6. Fine-tune the models obtained in the initial alignment on filtered responses, using DPO loss with NLL loss regulatization. 
+6. Fine-tune the models obtained in the initial alignment on filtered responses, using DPO loss with NLL loss regularization. 
 ### cache conflicted data locally
 ```
 PYTHONPATH=. python scripts/SIPO/cache_conflict.py --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:" --dataset_name "nvidia/HelpSteer-pairwise-correctness-0.6" --eval_size -1
