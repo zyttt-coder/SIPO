@@ -42,7 +42,7 @@ CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. python ./scripts/SIPO/review.py --sft_model_
 ## Rewrite
 4. Rewrite MOD_sampled response based on the reviews.
 ```
-PYTHONPATH=. accelerate launch ./scripts/SIPO/rewrite.py --sft_model_name {path_to_the_sft_model}     --dpo_model_1_name "./output/nvidia/HelpSteer/SIPO/0.0correctness/best_checkpoint"   --dpo_model_2_name "./output/nvidia/HelpSteer/SIPO/1.0correctness/best_checkpoint"    --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:"    --input_dir "./output/nvidia/HelpSteer/SIPO/review"   --output_dir "./output/nvidia/HelpSteer/SIPO/rewrite"    --max_length 1600
+PYTHONPATH=. accelerate launch ./scripts/SIPO/rewrite.py    --sft_model_name {path_to_the_sft_model}    --soup_weights 0.2 0.4 0.6 0.8    --dpo_model_1_name "./output/nvidia/HelpSteer/SIPO/0.0correctness/best_checkpoint"   --dpo_model_2_name "./output/nvidia/HelpSteer/SIPO/1.0correctness/best_checkpoint"    --prompt_template "BEGINNING OF CONVERSATION: USER: {raw_prompt} ASSISTANT:"    --input_dir "./output/nvidia/HelpSteer/SIPO/review"   --output_dir "./output/nvidia/HelpSteer/SIPO/rewrite"    --max_length 1600
 ```
 
 ## Filter
