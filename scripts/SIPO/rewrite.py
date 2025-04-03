@@ -24,6 +24,7 @@ class ScriptArguments:
     sft_model_name: str = field(metadata={"help": "the sft model name"})
     dpo_model_1_name: str = field(metadata={"help": "the dpo model 1 name"})
     dpo_model_2_name: str = field(metadata={"help": "the dpo model 2 name"})
+    soup_weights: List[float] = field(metadata={"help": "list of weights for linear interpolation between adapter models"})
     num_beams: int = field(default=1, metadata={"help": "the number of beams"})
     seed: int = field(default=42, metadata={"help": "the seed"})
     f_type: str = field(default="reverse_kl")
@@ -39,7 +40,6 @@ class ScriptArguments:
 if __name__ == "__main__":
     script_args = tyro.cli(ScriptArguments)
     set_seeds(script_args.seed)
-    soup_weights = [0.2,0.4,0.6,0.8]
 
     # base model
     print_local_main("loading model...")
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
     
-    replication = len(soup_weights)
+    replication = len(script_args.soup_weights)
     reviews = load_dataset(script_args.input_dir, split="train")
 
     assert len(reviews)%replication == 0, "number of replication is wrong"
@@ -86,8 +86,8 @@ if __name__ == "__main__":
     )
 
     results = [{} for _ in range(len(reviews)//replication)]
-    for weight_idx in range(len(soup_weights)):
-        weight = soup_weights[weight_idx]
+    for weight_idx in range(len(script_args.soup_weights)):
+        weight = script_args.soup_weights[weight_idx]
         sample_model = FusionModel(sft_model, [weight, 1.0-weight], f_type=script_args.f_type)
         for idx in tqdm.tqdm(range(0, len(reviews)//replication)):
             idx_map = idx*replication + weight_idx
@@ -119,7 +119,7 @@ if __name__ == "__main__":
             rewrite_res = rewrite_res.split("Question:")[0].strip()
             results[idx][f"weight_{weight_idx}"] = script_args.prompt_template.format(raw_prompt=raw_prompt)+rewrite_res
 
-    results = [{"prompt_response": res[f"weight_{w}"]} for res in results for w in range(len(soup_weights))]
+    results = [{"prompt_response": res[f"weight_{w}"]} for res in results for w in range(len(script_args.soup_weights))]
 
     dataset = Dataset.from_list(results)
     dataset.to_json(output_path)
